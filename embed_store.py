@@ -18,13 +18,14 @@ COLLECTION_NAME = "news_data"
 client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
 
 def create_collection_if_not_exists():
-    try:
-        client.get_collection(COLLECTION_NAME)
-    except:
-        client.recreate_collection(
-            COLLECTION_NAME,
+    if not client.collection_exists(collection_name=COLLECTION_NAME):
+        client.create_collection(
+            collection_name=COLLECTION_NAME,
             vectors_config=VectorParams(size=512, distance=Distance.COSINE),
         )
+        print(f"Collection '{COLLECTION_NAME}' created.")
+    else:
+        print(f"Collection '{COLLECTION_NAME}' already exists.")
 
 def process_feed():
     create_collection_if_not_exists()
