@@ -1,0 +1,7 @@
+feedparser
+Pillow
+torch
+qdrant-client
+sentence-transformers
+requests
+python-dotenv
