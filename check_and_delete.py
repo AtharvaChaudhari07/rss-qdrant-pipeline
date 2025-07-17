@@ -1,7 +1,7 @@
 import os
 from qdrant_client import QdrantClient
 
-QDRANT_URL = "https://<your-qdrant-url>"
+QDRANT_URL = "https://ed04a38c-8d1c-4b40-9ba9-8d0e05111057.eu-west-1-0.aws.cloud.qdrant.io:6333"
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 COLLECTION_NAME = "news_data"
 MAX_STORAGE_MB = 3500  # target usage in MB
