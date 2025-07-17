@@ -4,7 +4,7 @@ from io import BytesIO
 import torch
 from sentence_transformers import SentenceTransformer, util
 
-model = SentenceTransformer("openai/clip-vit-base-patch32")
+model = SentenceTransformer("clip-ViT-B-32")
 
 def get_image_embedding(image_url):
     try:
