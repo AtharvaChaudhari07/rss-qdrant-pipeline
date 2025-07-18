@@ -4,21 +4,28 @@ from qdrant_client import QdrantClient
 QDRANT_URL = "https://ed04a38c-8d1c-4b40-9ba9-8d0e05111057.eu-west-1-0.aws.cloud.qdrant.io:6333"
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 COLLECTION_NAME = "news_data"
-MAX_STORAGE_MB = 3500  # target usage in MB
+
 
 client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
 
-def get_storage_usage_mb():
-    usage = client.get_collection(collection_name=COLLECTION_NAME).points_count
-    # Assume 1 point = ~1KB for estimation
-    return usage / 1024
+DELETE_BATCH_SIZE = 500
 
-def delete_old_data():
-    if get_storage_usage_mb() > MAX_STORAGE_MB:
-        print("Storage high. Deleting oldest 500 points.")
-        client.scroll(collection_name=COLLECTION_NAME, limit=500, with_payload=True)
-        ids = [point.id for point in client.scroll(COLLECTION_NAME, limit=500)[0]]
+def delete_oldest_points(batch_size=DELETE_BATCH_SIZE):
+    print(f"Deleting {batch_size} oldest points.")
+    # Scroll and sort by 'created_at' ascending (oldest first)
+    scroll_result, _ = client.scroll(
+        collection_name=COLLECTION_NAME,
+        limit=batch_size,
+        with_payload=True,
+        # Uncomment the next line if your Qdrant version supports sorting
+        sort=[{"key": "created_at", "order": "asc"}]
+    )
+    ids = [point.id for point in scroll_result]
+    if ids:
         client.delete(collection_name=COLLECTION_NAME, points_selector={"points": ids})
+        print(f"Deleted {len(ids)} oldest points.")
+    else:
+        print("No points found to delete.")
 
 if __name__ == "__main__":
-    delete_old_data()
+    delete_oldest_points()

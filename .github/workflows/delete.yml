@@ -1,17 +1,13 @@
-name: Run RSS Pipeline
+name: Delete Oldest Vectors
 
 on:
-  workflow_dispatch:  # Manual trigger
-  schedule:
-    - cron: "0 */8 * * *"  # Every 8 hours
+  workflow_dispatch:
 
 jobs:
-  build:
+  delete:
     runs-on: ubuntu-latest
-
-    env:  # Set environment variable for the entire job
+    env:
       QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -34,5 +30,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Embed and Store Data
-        run: python embed_store.py
+      - name: Delete Oldest Vectors
+        run: python check_and_delete.py 

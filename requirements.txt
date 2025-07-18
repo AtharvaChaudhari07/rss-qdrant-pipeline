@@ -5,3 +5,6 @@ qdrant-client
 sentence-transformers
 requests
 python-dotenv
+langchain
+lxml-html-clean
+newspaper3k
