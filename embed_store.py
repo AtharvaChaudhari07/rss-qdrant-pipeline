@@ -11,10 +11,22 @@ from bs4 import BeautifulSoup
 
 rss_urls = [
     "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
-    # "https://timesofindia.indiatimes.com/rssfeedmostrecent.cms",
-    # "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
-    # "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
-    # "https://timesofindia.indiatimes.com/rssfeeds/54829575.cms"
+    "https://timesofindia.indiatimes.com/rssfeedmostrecent.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/7098551.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/72258322.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/54829575.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/4719148.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/-2128672765.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/2647163.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/66949542.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/913168846.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/2886704.cms",
+    "https://timesofindia.indiatimes.com/rssfeedmostshared.cms",
+    
 ]
 
 QDRANT_URL = "https://ed04a38c-8d1c-4b40-9ba9-8d0e05111057.eu-west-1-0.aws.cloud.qdrant.io:6333"
@@ -32,6 +44,17 @@ def create_collection_if_not_exists():
         print(f"Collection '{COLLECTION_NAME}' created.")
     else:
         print(f"Collection '{COLLECTION_NAME}' already exists.")
+
+    # Create an index for the 'type' field as a keyword
+    try:
+        client.create_payload_index(
+            collection_name=COLLECTION_NAME,
+            field_name="type",
+            field_schema="keyword"
+        )
+        print("Index on 'type' created.")
+    except Exception as e:
+        print(f"Index on 'type' may already exist or failed to create: {e}")
 
 def get_full_article_text_bs(url):
     response = requests.get(url, timeout=10)
@@ -95,6 +118,7 @@ def process_feed():
                     "link": link,
                     "image_url": image_url,
                     "pub_date": pub_date,
+                    "created_at": datetime.utcnow().isoformat()
                 }
                 point = PointStruct(id=str(uuid.uuid4()), vector=text_embedding, payload=payload)
                 client.upsert(collection_name=COLLECTION_NAME, points=[point])
@@ -111,6 +135,7 @@ def process_feed():
                         "summary": summary,
                         "link": link,
                         "pub_date": pub_date,
+                        "created_at": datetime.utcnow().isoformat()
                     }
                     point = PointStruct(id=str(uuid.uuid4()), vector=image_embedding, payload=payload)
                     client.upsert(collection_name=COLLECTION_NAME, points=[point])
