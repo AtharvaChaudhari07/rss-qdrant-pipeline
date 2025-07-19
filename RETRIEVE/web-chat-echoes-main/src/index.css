@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern chat interface design system - ChatGPT inspired 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Chat Interface Colors - Updated to match design specs */
+    --background: 220 100% 99%; /* Light bluish-gray #f9fbff */
+    --foreground: 0 0% 7%;
+    
+    /* Chat specific colors */
+    --chat-background: 220 100% 99%; /* Light bluish-gray #f9fbff */
+    --chat-sidebar: 217 33% 97%; /* Very light gray-blue #f3f6fb */
+    --chat-user: 243 75% 59%; /* Blue accent #4f46e5 */
+    --chat-assistant: 0 0% 100%; /* White */
+    --chat-border: 0 0% 90%;
+    --chat-hover: 217 33% 95%; /* Slightly darker sidebar hover */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
+    /* Primary - Light Blue accent */
+    --primary: 243 75% 70%;
+    --primary-hover: 243 75% 75%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 243 75% 85%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(243 75% 75%) 0%, hsl(243 75% 85%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(220 50% 95%) 0%, hsl(220 30% 98%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    --gradient-glass-border: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 20%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 220 100% 95%;
+    --accent-foreground: 220 100% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 100%;
+    --input-border: 0 0% 85%;
+    --ring: 220 100% 60%;
+
+    --radius: 0.75rem;
+    
+    /* Chat specific gradients */
+    --gradient-message: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-light)) 100%);
+    --gradient-floating: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%);
+    
+    /* Animations */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark theme for chat interface */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    
+    /* Chat specific dark colors */
+    --chat-background: 0 0% 6%;
+    --chat-sidebar: 0 0% 10%;
+    --chat-user: 220 50% 12%;
+    --chat-assistant: 0 0% 8%;
+    --chat-border: 0 0% 15%;
+    --chat-hover: 0 0% 12%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+
+    /* Primary stays consistent in dark mode */
+    --primary: 220 100% 50%;
+    --primary-hover: 220 100% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 220 50% 15%;
+    --accent-foreground: 220 100% 80%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 10%;
+    --input-border: 0 0% 20%;
+    --ring: 220 100% 50%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+}
