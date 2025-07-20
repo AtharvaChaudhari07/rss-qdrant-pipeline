@@ -3,7 +3,8 @@ name: Run RSS Pipeline
 on:
   workflow_dispatch:  # Manual trigger
   schedule:
-    - cron: "0 */8 * * *"  # Every 8 hours
+    - cron: "0 6 * * *"
+
 
 jobs:
   build:
